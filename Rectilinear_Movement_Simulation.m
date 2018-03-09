@@ -34,11 +34,21 @@ g = 9.8;
         %M - weight of N-1 'lumped' masses
 M = (n-1)*m;
 
-t=[0:1:25];
+t=0:.1:T;
 
 v = ((k*g*(M-m))*t)/m;
 
-plot(t,v);
+t2=T:.1:2*T;
+
+v2 = -((k*g*(M-m))*(t-T))/m;
+
+plot(t,v,t2,v2);
+
+ylabel('v = maximum speed reached by body m')
+
+xlabel('t = time')
+
+title('Phase One', 'FontSize', 12)
 
 grid
 
