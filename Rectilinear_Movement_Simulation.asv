@@ -1,15 +1,23 @@
+servo = .064;       %weight of servo in kg
+metal_parts = .05;  %estimate of weight of metal parts of module in kg
+
+fdamper = .5; %damper force between 0 and 1
 n = 10;         % n - number of modules
-m = 5;          % m - weight of singular module
+m = servo+metal_parts;          % m - weight of singular module
 %two phase movement (in total)
     %phase 1: body of weight m attracted to body with weight M (sum of N-1 modules)
 
     %relation of the moving power
 Ftrm=k*m*g;
-FtrM=k*M*g;
+FtrM=k*M*g
         %k - friction coefficient
         %M - weight
         %g - acceleration of gravity        
        
+        
+%Fh (subject to constraint (6))
+
+fh = fdamper+FtrM;  %any greater and the constraint doesn't hold
 %maximum speed reached by body m 
     %vm(t)=((kg(M-m))T)/m
         
@@ -64,7 +72,7 @@ vp = (1/(2*(m+M)))*sqrt(k*g*m*s*(M-m)) %average speed of two moving masses m and
     
 %Phase 1 (movement of body m)
 ttt = 0:.1:T;
-b = 10; %tension force?
+b = m*g*cos(20); %tension force?
 v1 = (((M-m)*k*g)/b)*(1-exp(-(b/m)*ttt)); %Velocity of mass m during slow phase
 plot(ttt, v1);
 xlabel('t=time')
@@ -85,4 +93,7 @@ grid
 %Phase 2 (movement of body M)
 
 %relation for body m speed
-vm
+mc = m+M;
+mr = (M*m)/(M+m);
+
+vmspeed = ((b*(Ftrm-FtrM))/(b*mc))*(()/())-(mr/b)
