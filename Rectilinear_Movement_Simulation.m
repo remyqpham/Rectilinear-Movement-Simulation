@@ -1,89 +1,91 @@
-%example code
-%T=5;
-%a=-1/T;
-%x0=1;
-%t=[0:1:25];
-%x=exp(a*t)*x0; %including ; omits it from output below
-%plot(t,x);
-%grid
+n = 10;         % n - number of modules
+m = 5;          % m - weight of singular module
+%two phase movement (in total)
+    %phase 1: body of weight m attracted to body with weight M (sum of N-1 modules)
 
-% n - number of modules
-n = 10;
-
-%equation functions
-
-
-%relation of the moving power
-    %F1=k*M*g
+    %relation of the moving power
+Ftrm=k*m*g;
+FtrM=k*M*g;
         %k - friction coefficient
         %M - weight
         %g - acceleration of gravity        
-        
-
+       
 %maximum speed reached by body m 
     %vm(t)=((kg(M-m))T)/m
-        %m - weight of singular module
-m = 5;
-        %T - time during which the attracted body starts to be slowed down
-        %by the force of the same intensity
-T = 5;
-        %k - friction coefficient
-k = .5;
-        %g - acceleration of gravity     
-g = 9.8;
-        %M - weight of N-1 'lumped' masses
-M = (n-1)*m;
-
-t=0:.1:T;
-
+        
+T = 5;          %T - time during which the attracted body starts to be slowed down
+                %by the force of the same intensity   
+k = .5;         %k - friction coefficient       
+g = 9.8;        %g - acceleration of gravity     
+M = (n-1)*m;    %M - weight of N-1 'lumped' masses
+t=0:.1:T;       %range for time T as velocity increases
 v = ((k*g*(M-m))*t)/m;
-
-t2=T:.1:2*T;
+tm=T:.1:2*T;    %range for time T as velocity decreases
 
 v2 = -((k*g*(M-m))*(t-T))/m;
 
-plot(t,v,t2,v2);
-
+plot(t,v,tm,v2);
 ylabel('v = maximum speed reached by body m')
-
 xlabel('t = time')
-
-title('Phase One', 'FontSize', 12)
-
+title('Phase One (movement of mass m)', 'FontSize', 12)
 grid
-
-        
-        
+figure;         
 %time T1
     %T1 = sqrt((m*s)/((k*g)(M-m)))
         %s - maximum range of motion between body m and body M
-    
-
-
-%simulation
-
-%constants
-    %m=mass of one consecutive modular part of snake
-    %N=number of masses
-
-%using a simplified two-mass system
-
-%two phase movement (in total)
-    %phase 1: body of weight m attracted to body with weight M (sum of N-1 modules)
         
-    
-    %phase 2: body m and body M are 'abducted' from each other
-    
-%fast phase
+%phase 2: body m and body M are 'abducted' from each other
     %maximum speed reached by body M 
-        %vm(tt)=(F2/M)T2
+        %vm(t)=(F2/M)T2
             %T2 is the time during what the body M starts to be slowed down
             %by the force F2
-            
-    %average speed of both moving masses
-        %vp(t)=(1/(2(m+M))*sqrt(k*g*m*s*(M-m))
-        
-      
-        
-    %two mass system will reach maximal average speed with implication
-        %M=3m
+F2 = k*M*g; 
+T2 = 10; %T2 = time during which the body M starts to be slowed down by the force F2
+tt = 0:.1:T2;
+vm = (F2/M)*T2;
+plot(tt,vm);
+ylabel('v = maximum speed reached by body M')
+xlabel('t = time')
+title('Phase Two (movement of mass M)', 'FontSize', 12)
+grid
+figure; 
+
+s = 90; %maximum range of motion between body m and body M
+
+vp = (1/(2*(m+M)))*sqrt(k*g*m*s*(M-m)) %average speed of two moving masses m and M
+                
+%two mass system will reach maximal average speed with implication M=3m
+
+    %maybe graph that? ^ to determine some of our variables/compare
+    
+%modified dynamic system (adding a dynamic damper to both masses)
+    %relation written as |Fh-Fdamper|<=FtrM
+    %FtrM = k*M*g, frictional force affecting body M
+    
+%Phase 1 (movement of body m)
+ttt = 0:.1:T;
+b = 10; %tension force?
+v1 = (((M-m)*k*g)/b)*(1-exp(-(b/m)*ttt)); %Velocity of mass m during slow phase
+plot(ttt, v1);
+xlabel('t=time')
+ylabel('Velocity (m/s)')
+title('Phase 1 (Modified dynamic system, during)', 'FontSize', 12)
+grid
+figure;
+
+
+v1t = -((k*m*g)/b)*(1-(M/m)*exp(-(b/m)*ttt));
+plot(ttt,v1t);
+xlabel('t=time')
+ylabel('Velocity (m/s)')
+title('Phase 1 (Modified dynamic system, end of slow phase)', 'FontSize', 12)
+grid
+%figure;
+
+%Phase 2 (movement of body M)
+
+%relation for body m speed
+mc = m+M;
+mr = (M*m)/(M+m);
+
+%vmspeed = ((b*(Ftrm-FtrM))/(b*mc))*
