@@ -2,7 +2,7 @@ servo = .064;       %weight of servo in kg
 metal_parts = .025333;  %estimate of weight of metal parts of module in kg
 
 fdamper = .5; %damper force between 0 and 1
-n = 10;         % n - number of modules
+n = 6;         % n - number of modules
 m = servo+metal_parts;          % m - weight of singular module
 %two phase movement (in total)
     %phase 1: body of weight m attracted to body with weight M (sum of N-1 modules)
@@ -18,7 +18,7 @@ m = servo+metal_parts;          % m - weight of singular module
         
 T = 5;          %T - time during which the attracted body starts to be slowed down
                 %by the force of the same intensity   
-k = .5;         %k - friction coefficient       
+k = .005;         %k - friction coefficient       
 g = 9.8;        %g - acceleration of gravity     
 M = (n-1)*m;    %M - weight of N-1 'lumped' masses
 
@@ -102,7 +102,7 @@ figure;
 mc = m+M;
 mr = (M*m)/(M+m);
 
-vmspeed = ((b*(Ftrm-FtrM))/(b*mc))*((((M*(Ftrm-fh))/(b*(Ftrm-FtrM)))-(mr/b))*(1-exp(-(b/mr)*ttt))+ttt);
+vmspeed = -((b*(Ftrm-FtrM))/(b*mc))*((((M*(Ftrm-fh))/(b*(Ftrm-FtrM)))-(mr/b))*(1-exp(-(b/mr)*ttt))+ttt);
 
 plot(ttt,vmspeed);
 xlabel('t=time')
