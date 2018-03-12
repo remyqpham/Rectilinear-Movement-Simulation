@@ -3,7 +3,12 @@ metal_parts = .025333;  %estimate of weight of metal parts of module in kg
 
 fdamper = .5; %damper force between 0 and 1
 n = 6;         % n - number of modules
-m = servo+metal_parts;          % m - weight of singular module
+
+egg = .09;
+egg_share = egg/n;
+egg_force = egg*g*cos(20);
+
+m = servo+metal_parts+egg_share;          % m - weight of singular module
 %two phase movement (in total)
     %phase 1: body of weight m attracted to body with weight M (sum of N-1 modules)
 
@@ -21,9 +26,6 @@ T = 5;          %T - time during which the attracted body starts to be slowed do
 k = .005;         %k - friction coefficient       
 g = 9.8;        %g - acceleration of gravity     
 M = (n-1)*m;    %M - weight of N-1 'lumped' masses
-
-egg = .09;
-egg_force = egg*g*cos(20);
 
 Ftrm=k*m*g;
 FtrM=k*M*g;
