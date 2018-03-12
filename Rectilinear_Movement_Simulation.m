@@ -1,5 +1,5 @@
 servo = .064;       %weight of servo in kg
-metal_parts = .05;  %estimate of weight of metal parts of module in kg
+metal_parts = .025333;  %estimate of weight of metal parts of module in kg
 
 fdamper = .5; %damper force between 0 and 1
 n = 10;         % n - number of modules
@@ -21,6 +21,9 @@ T = 5;          %T - time during which the attracted body starts to be slowed do
 k = .5;         %k - friction coefficient       
 g = 9.8;        %g - acceleration of gravity     
 M = (n-1)*m;    %M - weight of N-1 'lumped' masses
+
+egg = .09;
+egg_force = egg*g*cos(20);
 
 Ftrm=k*m*g;
 FtrM=k*M*g;
