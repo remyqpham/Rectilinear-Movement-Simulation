@@ -8,16 +8,11 @@ m = servo+metal_parts;          % m - weight of singular module
     %phase 1: body of weight m attracted to body with weight M (sum of N-1 modules)
 
     %relation of the moving power
-Ftrm=k*m*g;
-FtrM=k*M*g
         %k - friction coefficient
         %M - weight
         %g - acceleration of gravity        
-       
-        
-%Fh (subject to constraint (6))
 
-fh = fdamper+FtrM;  %any greater and the constraint doesn't hold
+
 %maximum speed reached by body m 
     %vm(t)=((kg(M-m))T)/m
         
@@ -26,6 +21,14 @@ T = 5;          %T - time during which the attracted body starts to be slowed do
 k = .5;         %k - friction coefficient       
 g = 9.8;        %g - acceleration of gravity     
 M = (n-1)*m;    %M - weight of N-1 'lumped' masses
+
+Ftrm=k*m*g;
+FtrM=k*M*g;
+
+%Fh (subject to constraint (6))
+
+fh = fdamper+FtrM;  %any greater and the constraint doesn't hold
+
 t=0:.1:T;       %range for time T as velocity increases
 v = ((k*g*(M-m))*t)/m;
 tm=T:.1:2*T;    %range for time T as velocity decreases
