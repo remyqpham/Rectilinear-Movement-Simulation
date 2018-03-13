@@ -16,11 +16,11 @@ m = servo+metal_parts+egg_share;          % m - weight of singular module
         %k - friction coefficient
         %M - weight
         %g - acceleration of gravity        
-
+s = 90;
 %maximum speed reached by body m 
     %vm(t)=((kg(M-m))T)/m
         
-T = 1;          %T - time during which the attracted body starts to be slowed down
+T = sqrt((m*s)/(k*g*(M-m)));          %T - time during which the attracted body starts to be slowed down
                 %by the force of the same intensity   
 k = .5;         %k - friction coefficient       
 M = (n-1)*m;    %M - weight of N-1 'lumped' masses
@@ -50,7 +50,7 @@ figure;
             %T2 is the time during what the body M starts to be slowed down
             %by the force F2
 F2 = k*M*g; 
-T2 = 1; %T2 = time during which the body M starts to be slowed down by the force F2
+T2 = 2*T; %T2 = time during which the body M starts to be slowed down by the force F2
 tt = 0:.1:T2;
 vm = (F2/M)*T2;
 plot(tt,vm);
